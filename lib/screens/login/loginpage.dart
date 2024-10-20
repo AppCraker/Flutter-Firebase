@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:testingapp/screens/Signup/signup.dart';
 import 'package:testingapp/screens/login/widgets/inputform.dart';
+import 'package:testingapp/screens/posts/post_screen.dart';
 import 'package:testingapp/widget/roundbutton.dart';
 
 class Loginpage extends StatefulWidget {
@@ -16,8 +17,43 @@ class _LoginpageState extends State<Loginpage> {
   final emailcontroller = TextEditingController();
   final _formkey = GlobalKey<FormState>();
   final passwordcontroller = TextEditingController();
-
+   bool loading = false;
   FirebaseAuth _auth = FirebaseAuth.instance;
+
+  void login(){
+    setState(() {
+      loading = true;
+    });
+    _auth.signInWithEmailAndPassword(
+      email: emailcontroller.text,
+       password: passwordcontroller.text.toString()).then((value){
+        setState(() {
+          loading = false;
+        });
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>PostScreen()));
+        ScaffoldMessenger.of(context).showSnackBar(
+                                   const SnackBar(
+                                         content: Text("Login Successful"),
+                                          backgroundColor: Colors.green,
+                                          duration: Duration(seconds: 3),
+                                   ),
+                                 );
+
+
+
+    }).onError((error,stackTrace){
+      setState(() {
+        loading = false;
+      });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                                   SnackBar(
+                                         content: Text(error.toString()),
+                                          backgroundColor: Colors.red,
+                                          duration: Duration(seconds: 3),
+                                   ),
+                                 );
+    });
+  }
 
   @override
   // use nhi hai toh discard krta hai
@@ -81,8 +117,11 @@ class _LoginpageState extends State<Loginpage> {
 
               Roundbutton(
                 title: "Login",
+                loading: loading,
                  onTap: (){
                   if(_formkey.currentState!.validate()){
+                    
+                    login();
                      
                   }
                  }

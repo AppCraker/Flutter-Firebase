@@ -16,7 +16,7 @@ class InputfieldForm extends StatelessWidget {
   final String valuetxt;
   String helpertxt;
   final Icon icon;
-  bool obscure ;
+  bool obscure;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -29,7 +29,7 @@ class InputfieldForm extends StatelessWidget {
                     ),
 
                     validator: (value){
-                      if(value!.isEmpty){
+                      if(value!.isEmpty){ 
                         return validatetxt;
                       }
                       return null;
