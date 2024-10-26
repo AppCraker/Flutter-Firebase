@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:testingapp/screens/Signup/signup.dart';
+import 'package:testingapp/screens/login/loginwihPhoneNo.dart';
 import 'package:testingapp/screens/login/widgets/inputform.dart';
 import 'package:testingapp/screens/posts/post_screen.dart';
 import 'package:testingapp/widget/roundbutton.dart';
@@ -142,7 +143,26 @@ class _LoginpageState extends State<Loginpage> {
                       "Sign In"
                     ))
                   ],
-                )
+                ),
+
+                SizedBox(
+                  height: 20
+                ),
+
+                Roundbutton(
+                  title: "Login with Phone Number",
+                   onTap: (){
+                    Navigator.push(
+                      context,
+                       MaterialPageRoute(
+                        builder: (context)=> Loginwihphoneno()
+                        
+                        )
+                        
+                        );
+
+
+                   }),
 
             ],
           ),
