@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:testingapp/screens/login/loginpage.dart';
 import 'package:testingapp/screens/posts/add_posts.dart';
@@ -11,6 +13,7 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
+  final ref = FirebaseDatabase.instance.ref('Post');
   final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
@@ -42,9 +45,14 @@ class _PostScreenState extends State<PostScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Text("Your content goes here"),
-        ),
+        child: FirebaseAnimatedList(
+          query: ref,
+          itemBuilder: (context,snapshot,animation,index){
+            return ListTile(
+              title: Text(snapshot.child('title').value.toString()),
+              subtitle: Text(snapshot.child('id').value.toString()),
+            );
+          })
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

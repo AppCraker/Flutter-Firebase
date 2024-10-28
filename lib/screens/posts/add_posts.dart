@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:testingapp/screens/posts/post_screen.dart';
 import 'package:testingapp/widget/roundbutton.dart';
 
 class AddPostScreen extends StatefulWidget {
@@ -58,6 +59,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     setState(() {
                   loading = false;
                 });
+              
                     ScaffoldMessenger.of(context).showSnackBar(
                                    const SnackBar(
                                          content: Text("Post added"),
@@ -65,6 +67,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                           duration: Duration(seconds: 3),
                                    ),
                                  );
+                               Navigator.push(context, MaterialPageRoute(builder: (context)=> PostScreen()));
                   }).onError((error,stackTrace){
                     setState(() {
                   loading = false;
